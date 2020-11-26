@@ -13,7 +13,7 @@ pool.connect();
 router.post("/", admin, (req, res, next) => {
   const id = uniqid();
   pool.query(
-    "INSERT INTO faq (id, question, answer) VALUES ($1, $2, $3, $4);",
+    "INSERT INTO faq (id, question, answer, code) VALUES ($1, $2, $3, $4);",
     [id, req.body.question, req.body.answer, req.body.code],
     (err, result) => {
       if (err) {
