@@ -81,8 +81,8 @@ router.post("/", admin, upload.single("image"), (req, res, next) => {
       if (err) {
         return res.status(400).json({ message: "Bad Request" });
       } else {
-         res.status(201).json({ id: id, image: filepath });
-         return sendNotification(req.body.title, req.body.body)
+        res.status(201).json({ id: id, image: filepath });
+        return sendNotification(req.body.title, req.body.body)
       }
     }
   );
@@ -140,6 +140,28 @@ router.patch("/:id", admin, (req, res, next) => {
         return res.status(400).json({ message: "Bad Request" });
       } else if (result.rowCount) {
         return res.status(200).json({ message: "Updated" });
+      } else {
+        return res.status(404).json({
+          message: "Not found",
+        });
+      }
+    }
+  );
+});
+
+router.patch("/image/:id", admin, upload.single("image"), (req, res, next) => {
+  let filepath = null;
+  if (req.file) {
+    filepath = req.file.path;
+  }
+  pool.query(
+    "UPDATE news SET image=$1 WHERE id=$2;",
+    [filepath, req.params.id],
+    (err, result) => {
+      if (err) {
+        return res.status(400).json({ message: "Bad Request" });
+      } else if (result.rowCount) {
+        return res.status(200).json({ message: "Success", image: filepath });
       } else {
         return res.status(404).json({
           message: "Not found",
