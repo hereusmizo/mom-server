@@ -20,7 +20,7 @@ router.post("/", admin, (req, res) => {
     } else {
       const id = uniqid();
       pool.query(
-        "INSERT INTO mom (id, name, phone, email, address, district, role, contact_person, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
+        "INSERT INTO mom (id, name, phone, email, address, district, role, contact_person, upi, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);",
         [
           id,
           req.body.name,
@@ -30,6 +30,7 @@ router.post("/", admin, (req, res) => {
           req.body.district,
           req.body.role,
           req.body.contact_person,
+          req.body.upi,
           hash,
         ],
         (err, result) => {
@@ -73,6 +74,7 @@ router.post("/login", (req, res, next) => {
                     district: result.rows[0].district,
                     role: result.rows[0].role,
                     contact_person: result.rows[0].contact_person,
+                    upi: result.rows[0].upi,
                     token: result.rows[0].token,
                     type: 2,
                   },
@@ -97,7 +99,7 @@ router.post("/login", (req, res, next) => {
 
 router.get("/:id", mom, (req, res, next) => {
   pool.query(
-    "SELECT id, name, phone, email, address, district, role, contact_person FROM mom WHERE id=$1;",
+    "SELECT id, name, phone, email, address, district, role, contact_person, upi FROM mom WHERE id=$1;",
     [req.params.id],
     (err, result) => {
       if (err) {
@@ -117,8 +119,7 @@ router.get("/:id", mom, (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   pool.query(
-    "SELECT id, name, phone, email, address, district, role, contact_person FROM mom;",
-
+    "SELECT id, name, phone, email, address, district, role, contact_person, upi FROM mom;",
     (err, result) => {
       if (err) {
         return res.status(400).json({ message: "Bad Request" });
@@ -298,7 +299,7 @@ router.patch("/token/:id", (req, res) => {
 
 router.patch("/:id", admin, (req, res, next) => {
   pool.query(
-    "UPDATE mom SET name=$1, phone=$2, email=$3, address=$4, district=$5, role=$6, contact_person=$7 WHERE id=$8;",
+    "UPDATE mom SET name=$1, phone=$2, email=$3, address=$4, district=$5, role=$6, contact_person=$7, upi=$8 WHERE id=$9;",
     [
       req.body.name,
       req.body.phone,
@@ -307,6 +308,7 @@ router.patch("/:id", admin, (req, res, next) => {
       req.body.district,
       req.body.role,
       req.body.contact_person,
+      req.body.upi,
       req.params.id,
     ],
     (err, result) => {

@@ -62,7 +62,7 @@ router.post("/", mom, upload.single("image"), (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   pool.query(
-    "SELECT p.*, m.name as mom_name, m.phone, m.email, m.address, m.contact_person, m.district FROM product as p INNER JOIN mom as m ON (p.mom=m.id) ORDER BY p.status DESC, p.created DESC;",
+    "SELECT p.*, m.name as mom_name, m.phone, m.email, m.address, m.contact_person, m.district, m.upi FROM product as p INNER JOIN mom as m ON (p.mom=m.id) ORDER BY p.status DESC, p.created DESC;",
     (err, result) => {
       if (err) {
         return res.status(400).json({ message: "Bad Request" });
