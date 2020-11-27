@@ -12,7 +12,7 @@ pool.connect();
 router.post("/", (req, res) => {
   const id = uniqid();
   pool.query(
-    "INSERT INTO query (id, name, phone, email, address, message) VALUES ($1, $2, $3, $4, $5, $6);",
+    "INSERT INTO query (id, name, phone, email, address, message, subject) VALUES ($1, $2, $3, $4, $5, $6, $7);",
     [
       id,
       req.body.name,
@@ -20,6 +20,7 @@ router.post("/", (req, res) => {
       req.body.email,
       req.body.address,
       req.body.message,
+      req.body.subject,
     ],
     (err, result) => {
       if (err) {
