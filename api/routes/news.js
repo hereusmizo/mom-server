@@ -92,7 +92,7 @@ router.post("/", admin, upload.single("image"), (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   pool.query(
-    "SELECT id, title, body, image, created FROM news ORDER BY created DESC;",
+    "SELECT id, title, body, image as photo, created FROM news ORDER BY created DESC;",
     (err, result) => {
       if (err) {
         return res.status(400).json({ message: "Bad Request" });
