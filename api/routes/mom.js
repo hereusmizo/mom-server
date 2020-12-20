@@ -196,34 +196,20 @@ router.get("/reset/:email", (req, res) => {
     (err, result) => {
       if (err) {
         return res.status(400).json({ message: "Bad Request" });
-      }
-      else if (result.rowCount) {
+      } 
+      else if (result.rowCount){
         const code = Math.floor(Math.random() * 90000) + 10000;
-        const token = jwt.sign(
-          {
-            id: result.rows[0].id,
-            code: code,
-          },
-          process.env.JWT_PW
-        );
-
-        transporter.sendMail({
-          from: "Mission Organic Mizoram <momizoram@gmail.com>",
-          to: req.params.email,
-          subject: "MOM Password Reset Code",
-          text: `Your password reset code is ${code}`
-        }, (err, res) => {
-          if (err) {
-            return res.status(200).json({
-              message: "Error"
-            });
-          } else {
-            return res.status(200).json({
-              message: "Sent code",
-              token: token,
-            });
-          }
-        })
+        res.status(200).json({
+          message: "Sent code",
+          id: result.rows[0].id,
+          code: code,
+        });
+         return transporter.sendMail({
+            from: "Mission Organic Mizoram <momizoram@gmail.com>",
+            to: req.params.email,
+            subject: "MOM Password Reset Code",
+            text: `Your password reset code is ${code}`
+          })
       }
       else {
         return res.status(404).json({
