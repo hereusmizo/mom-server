@@ -1,6 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
-const path = require("path")
+// const path = require("path");
 const bodyparser = require("body-parser");
 const compression = require("compression");
 const cors = require("cors");
@@ -33,33 +33,33 @@ app.use(cors());
 
 //routes
 //front
-app.use(express.static(path.join(__dirname, "build")));
-const routes = [
-  "/",
-  "/cms",
-  "/query",
-  "/product",
-  "/bulk",
-  "/news",
-  "/faq",
-  "/notice",
-  "/helpline",
-  "/mom",
-  "/admin",
-  "/settings",
-  "/product/retail",
-  "/product/bulk",
-  "/contact",
-  "/about",
-  "/privacy-policy",
-  "/profile",
-  "/product-order",
-  "/bulk-order",
-  "/order-history"
-];
-app.get(routes, function (req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+// app.use(express.static(path.join(__dirname, "build")));
+// const routes = [
+//   "/",
+//   "/cms",
+//   "/query",
+//   "/product",
+//   "/bulk",
+//   "/news",
+//   "/faq",
+//   "/notice",
+//   "/helpline",
+//   "/mom",
+//   "/admin",
+//   "/settings",
+//   "/product/retail",
+//   "/product/bulk",
+//   "/contact",
+//   "/about",
+//   "/privacy-policy",
+//   "/profile",
+//   "/product-order",
+//   "/bulk-order",
+//   "/order-history"
+// ];
+// app.get(routes, function (req, res) {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
 
 app.use("/uploads", express.static("uploads"));
 app.use("/api/admin", admin);
