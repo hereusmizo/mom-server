@@ -1,2 +1,0 @@
-(this["webpackJsonpmom-admin"]=this["webpackJsonpmom-admin"]||[]).push([[29],{483:function(e,n,a){"use strict";a.r(n);var t=a(0),r=a.n(t),i=a(70);n.default=function(){return r.a.createElement(i.a,{variant:"h2",align:"center",style:{marginTop:300}},"EROR 404",r.a.createElement("br",null),r.a.createElement("br",null),"Page Not found!")}}}]);
-//# sourceMappingURL=29.cca2faa1.chunk.js.map
