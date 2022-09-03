@@ -77,7 +77,7 @@ app.use("/api/product", product);
 app.use("/api/product-order", product_order);
 app.use("/api/vegetable", vegetable);
 app.use("/api/query", query);
-app.use("/api/staff", staffList);
+app.use("/api/staff-list", staffList);
 
 //error handle
 app.use((req, res, next) => {
