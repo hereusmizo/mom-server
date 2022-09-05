@@ -86,14 +86,10 @@ router.get("/list", admin, (req, res, next) => {
   );
 });
 
-router.patch("/:id", admin, upload.single("document"), (req, res, next) => {
-  var filepath = null;
-  if (req.file) {
-    filepath = req.file.path;
-  }
+router.patch("/:id", admin, (req, res, next) => {
   pool.query(
-    "UPDATE advertisement SET title=$1, link=$2, active=$3 WHERE id=$4;",
-    [req.body.title, filepath, req.body.active, req.params.id],
+    "UPDATE advertisement SET title=$1, active=$2 WHERE id=$3;",
+    [req.body.title, req.body.active, req.params.id],
     (err, result) => {
       if (err) {
         return res.status(400).json({ message: "Bad Request" });
