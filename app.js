@@ -19,6 +19,7 @@ const product_order = require("./api/routes/product_order");
 const vegetable = require("./api/routes/vegetable");
 const query = require("./api/routes/query");
 const staffList = require("./api/routes/staffList");
+const advertisement = require("./api/routes/advertisement");
 
 //logging activities
 
@@ -77,6 +78,7 @@ app.use("/api/product", product);
 app.use("/api/product-order", product_order);
 app.use("/api/vegetable", vegetable);
 app.use("/api/query", query);
+app.use("/api/advertisement", advertisement);
 app.use("/api/staff-list", staffList);
 
 //error handle
