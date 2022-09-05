@@ -1,19 +1,44 @@
 const express = require("express");
 const router = express.Router();
 const uniqid = require("uniqid");
+const path = require("path");
 const { Pool } = require("pg");
 const conn = require("../../connection");
 const admin = require("../middleware/admin");
+const multer = require("multer");
 const pool = new Pool({
   connectionString: conn,
 });
 pool.connect();
 
-router.post("/", admin, (req, res) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      `${file.originalname.substring(
+        0,
+        file.originalname.length - 4
+      )}(${Date.now()})${path.extname(file.originalname)}`
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+
+router.post("/", admin, upload.single("document"), (req, res) => {
   const id = uniqid();
+  var filepath = null;
+  if (req.file) {
+    filepath = req.file.path;
+  }
   pool.query(
     "INSERT INTO advertisement (id, title, link, active) VALUES ($1, $2, $3, $4);",
-    [id, req.body.title, req.body.link, req.body.active],
+    [id, req.body.title, filepath, req.body.active],
     (err, result) => {
       if (err) {
         return res.status(400).json({ message: "Bad Request" });
